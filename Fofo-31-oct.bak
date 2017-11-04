@@ -32,13 +32,11 @@
 
 ;----------SUMA LAS LISTAS Y RESULTADO AL LADO----------------------------
 (define evaluar-funcion-Lisresult;
-  (lambda (L)
+  (lambda (L numero_mayor)
     (map
      (lambda (x)
-       (map
-        (lambda (y)
-          (list  y (suma-l y)))
-        x))
+       ;(cond (<= (suma-l x) numero_mayor)
+       (list x (suma-l x)))
      L)))
 ;----------DISTRIBUIR LIST------------------
 (define distribuir
@@ -58,13 +56,4 @@
           (else
            (cons (car R)(d2 x(- n 1)(cdr R)))))))
 
-;(resolver 5000 30 #t 4 L)
-(define crear-primera-gen
-  (lambda(individuos L grupos R)
-    (cond((zero? individuos) R)
-         ((empty? R) ( crear-primera-gen (- individuos 1) L grupos (append R (distribuir L grupos))))
-         (else ( crear-primera-gen (- individuos 1) L grupos (list  R  (distribuir L grupos)))))))
-
-;( crear-primera-gen 2 L 4 '())
-;(suma-l ( crear-primera-gen 2 L 4 '()))
- (evaluar-funcion-Lisresult (crear-primera-gen 2 L 4 '())) ;Suma la info
+(resolver 5000 30 #t 4 L)

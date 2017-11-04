@@ -48,7 +48,9 @@
     (cond ((empty? L)R)
           (else
            (d1 (cdr L) n (d2 (car L) n R))))))
-
+;R es una lista
+;n un entero
+;x 
 (define d2
   (lambda( x n R)
     (cond ((zero? (random n))
@@ -56,4 +58,4 @@
           (else
            (cons (car R)(d2 x(- n 1)(cdr R)))))))
 
-(resolver 5000 30 #t 4 L)
+(resolver 5000 30 #t 10 L)
