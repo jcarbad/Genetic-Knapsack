@@ -1,0 +1,62 @@
+#lang racket
+
+(define L '(30 60 90 25 20 15 16 120 200 43 18 30 30))
+(define _k 4)
+(define _individuo '((30 60 90) ( 25 20 15 16 30) (200 43) (18 30 30)))
+;----------DISTRIBUIR LIST------------------
+(define distribuir
+  (lambda (L k)
+    (d1 L k (make-list k '()))))
+
+(define d1
+  (lambda(L n R)
+    (cond ((empty? L)R)
+          (else
+           (d1 (cdr L) n (d2 (car L) n R))))))
+
+(define d2
+  (lambda( x n R)
+    (cond ((zero? (random n))
+           (cons(append(car R)(list x))(cdr R)))
+          (else
+           (cons (car R)(d2 x(- n 1)(cdr R)))))))
+
+;-------SUMA TOTAL DE LISTA ------------
+; EJ: (1 2 3 25) => 31
+(define suma-lista
+  (lambda (L acum)
+    (if (empty? L) acum
+        (suma-lista (cdr L) (+ acum (car L))))))
+
+;----- SUMA TOTAL DE INDIVIDUO (para promedio) ------
+;EJ: ((5 7) + (3 8) + (4 6)) => [12] [11] [10] => 33
+(define suma-individuo
+  (lambda (I acum)
+    (if (empty? I) acum
+        (suma-individuo (cdr I) (+ acum (suma-lista (car I) 0))))))
+
+;----- Promedio de Individuo --------
+;Ej: ((5 7) (3 8) (4 6)) => 33/3 => 11
+(define promedio-individuo
+  (lambda (I)
+    (if (empty? I) 0
+        (/ (suma-individuo I 0) (length I)))))
+
+;----- Cuadrado de diferencia del promedio de individuo --------
+;Ej: X-Xi
+(define distancia-de-promedio
+  (lambda (L prom)
+    (expt (- (suma-lista L 0) prom) 2)))
+
+;----- Suma de distancias ---------
+(define suma-dist-rec
+  (lambda (I acum _promedio)
+    (if (empty? I) acum
+        (suma-dist-rec (cdr I) (+ acum (distancia-de-promedio (car I) _promedio)) _promedio))))
+
+(define suma-distancias
+  (lambda (I)
+    ((suma-dist-rec I 0 (promedio-individuo I)))))
+
+
+
