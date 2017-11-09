@@ -193,8 +193,13 @@
             (newline)
             (loop-generaciones total (+ num_gen 1) (generar-nueva-poblacion poblacion) tam_poblacion)])))
 ;-----------------------------------------
-(loop-generaciones 3 0 null 30)
+(display "       ss mm h D MM YYYY")(newline)
+(seconds->date (current-seconds))
 
+(loop-generaciones 50 0 null 30)
+
+(display "       ss mm h D MM YYYY")(newline)
+(seconds->date (current-seconds))
 #| PRUEBAS DE CADA METODO
 (define poblacion (poblacion-inicial _poblacion '()))
 (define hash-poblacion (genera-hash-map poblacion '()))
